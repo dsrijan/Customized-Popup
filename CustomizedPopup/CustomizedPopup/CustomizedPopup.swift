@@ -13,6 +13,10 @@ public enum CustomizedPopupPostion {
     case center
 }
 
+public protocol CustomizedPopupDelegate {
+    func okButtonTapped()
+}
+
 public class CustomizedPopup: UIView {
     
     var topView: UIView?
@@ -25,6 +29,8 @@ public class CustomizedPopup: UIView {
     // Background Color of Customized Popup
     public var backGroundColor = UIColor.darkGray
     
+    public var delegate : CustomizedPopupDelegate?
+    
     
     // Height Of Customized Popup
     public var height : CGFloat = 200.0
@@ -33,12 +39,27 @@ public class CustomizedPopup: UIView {
     
     private var isPopupShowing = false
     
+    private var title = "Alert"
+    
+    private var message = "Customize your message as per your need, You can also set whether you want to show or not this cancel Button or not"
+    
+    private var okButtonTitle = "Ok"
+    
+    private var cancelButtonTitle = "Cancel"
+    
+    private var cancelButtonFlag = false
+    
     // Public Show function
-    public func show() {
+    public func simpleAlert(title:String, message:String, showCancelButton: Bool) {
         
         guard let rootView = UIApplication.shared.keyWindow else {
             return
         }
+        
+        self.title = title
+        self.message = message
+        self.cancelButtonFlag = showCancelButton
+        
         self.topView = rootView
         self.setUpBackgroundView()
         self.setUpFrame()
@@ -63,6 +84,50 @@ public class CustomizedPopup: UIView {
         self.backGroundView?.addGestureRecognizer(tapGesture)
     }
     
+    private func setUpSimpleAlert() {
+        let title = UILabel(frame: CGRect(x: 10, y: 10, width: self.frame.width - 10, height: 20))
+        title.text = self.title
+        title.textAlignment = .center
+        title.textColor = UIColor.white
+        title.font = UIFont.systemFont(ofSize: 18.0)
+        self.addSubview(title)
+        
+        let message = UILabel(frame: CGRect(x: 10, y: 35, width: self.frame.width - 10, height: 70))
+        message.text = self.message
+        message.textAlignment = .center
+        message.numberOfLines = 3
+        message.textColor = UIColor.white
+        message.lineBreakMode = .byWordWrapping
+        message.font = UIFont.systemFont(ofSize: 16.0)
+        self.addSubview(message)
+        
+        let okButton = UIButton(type: .system)
+        okButton.frame = CGRect(x: 0, y: self.height - 60, width: self.frame.width, height: 44)
+        okButton.setTitle(self.okButtonTitle, for: .normal)
+        okButton.addTarget(self, action: #selector(self.okButtonTapped), for: .touchUpInside)
+        okButton.setTitleColor(UIColor.white, for: .normal)
+        okButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
+        self.addSubview(okButton)
+        
+        if cancelButtonFlag != false {
+            okButton.frame = CGRect(x: 0, y: self.height - 60, width: self.frame.width / 2, height: 44)
+            let cancelButton = UIButton(type: .system)
+            cancelButton.frame = CGRect(x: self.frame.width / 2, y: self.height - 60, width: self.frame.width / 2, height: 44)
+            cancelButton.setTitle(self.cancelButtonTitle, for: .normal)
+            cancelButton.setTitleColor(UIColor.white, for: .normal)
+            cancelButton.titleLabel?.font = UIFont.boldSystemFont(ofSize: 16.0)
+            self.addSubview(cancelButton)
+        }
+        
+    }
+    
+    @objc private func okButtonTapped(sender: UIButton){
+        if self.delegate != nil {
+            self.delegate?.okButtonTapped()
+        }
+    }
+    
+    
     @objc private func tapBackgroundView() {
         self.hidePopUp()
     }
@@ -76,6 +141,7 @@ public class CustomizedPopup: UIView {
         self.backgroundColor = self.backGroundColor
         self.layer.cornerRadius = cornerRadius
         self.topView?.addSubview(self)
+        setUpSimpleAlert()
         showPopUp()
     }
     
