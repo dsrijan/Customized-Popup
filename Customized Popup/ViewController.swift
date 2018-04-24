@@ -27,8 +27,8 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
         pv.hide()
     }
     
-    func okButtonTapped() {
-        print("Ok button calling..yehhhhhh")
+    func customizedOkButtonTapped(obj: UIButton) {
+        print("ok button called hello")
     }
     
     @IBAction func tapButton(_ sender: Any) {
@@ -36,8 +36,9 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
         pv.cornerRadius = 10.0
         pv.height =  180.0
         pv.delegate = self
-        pv.backGroundColor = UIColor.orange
-        pv.simpleAlert(title: "Alert", message: "Do you like our product.", showCancelButton: false)
+//        pv.simpleAlert(title: "", message: "Do you like our product.", showCancelButton: false)
+        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
+    
         
     }
     override func didReceiveMemoryWarning() {
