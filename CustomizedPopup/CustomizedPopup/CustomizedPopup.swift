@@ -29,6 +29,9 @@ public class CustomizedPopup: UIView {
     // Height Of Customized Popup
     public var height : CGFloat = 200.0
     
+    private var originY : CGFloat!
+    
+    private var isPopupShowing = false
     
     // Public Show function
     public func show() {
@@ -66,7 +69,10 @@ public class CustomizedPopup: UIView {
     
     private func setUpFrame() {
         
-        self.frame = CGRect(x: 0, y: (self.topView?.frame.height)!, width: (self.topView?.frame.width)!, height: height)
+        
+        self.originY = (self.topView?.frame.height)!
+        
+        self.frame = CGRect(x: 0, y: (self.originY), width: (self.topView?.frame.width)!, height: height)
         self.backgroundColor = self.backGroundColor
         self.layer.cornerRadius = cornerRadius
         self.topView?.addSubview(self)
@@ -75,6 +81,9 @@ public class CustomizedPopup: UIView {
     
     private func showPopUp() {
     
+        isPopupShowing = true
+        self.isHidden = false
+        self.frame.origin.y = self.originY
         UIView.animate(withDuration: 1, animations: {
             self.frame.origin.y -= self.height
             self.backGroundView?.alpha = 0.6
@@ -86,11 +95,15 @@ public class CustomizedPopup: UIView {
      }
 
     private func hidePopUp() {
+        
+        if !isPopupShowing {return}
+        
         UIView.animate(withDuration: 1, animations: {
             self.frame.origin.y += self.height
             self.backGroundView?.alpha = 0.2
         }) { (status) in
             self.isHidden = true
+            self.isPopupShowing = false
             self.backGroundView?.isHidden = true
         }
     }

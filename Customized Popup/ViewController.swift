@@ -10,15 +10,27 @@ import UIKit
 import CustomizedPopup
 
 class ViewController: UIViewController {
+    
+    let pv = CustomizedPopup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.rightButton))
+        self.navigationItem.rightBarButtonItem = rightBarButton
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
+    @objc
+    private func rightButton() {
+        pv.hide()
+    }
+    
+    
     @IBAction func tapButton(_ sender: Any) {
         
-        let pv = CustomizedPopup()
+        
         pv.cornerRadius = 5.0
         pv.height =  300.0
         pv.backGroundColor = UIColor.yellow
