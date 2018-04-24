@@ -95,14 +95,14 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
         self.showPopUp()
     }
     
-    public func alertWithMapView() {
+    public func alertWithMapView(latitude: Double, longitude: Double) {
         guard let rootView = UIApplication.shared.keyWindow else {
             return
         }
         self.topView = rootView
         self.setUpBackgroundView()
         setUpMapViewFrame()
-        setUpMapView()
+        setUpMapView(lat: latitude, long: longitude)
         self.showPopUp()
     }
     
@@ -115,15 +115,15 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
         self.topView?.addSubview(self)
     }
     
-    private func setUpMapView() {
+    private func setUpMapView(lat: Double, long: Double) {
         print(self.frame.width)
         mapView = MKMapView(frame: (self.frame))
         
         let latDelta:Double = 0.5
         let lngDelta:Double = 0.5
         
-        let latitude:Double = 37.57554038
-        let longitude:Double = -122.40068475
+        let latitude:Double = lat //37.57554038
+        let longitude:Double = long //-122.40068475
         
         let locationcoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
         let zoomSpan = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lngDelta)
@@ -131,23 +131,13 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
         self.mapView!.setRegion(region, animated: true)
         
         self.addSubview(mapView!)
-        
-//        if #available(iOS 11.0, *) {
-//            let scale = MKScaleView(mapView: mapView)
-//            scale.scaleVisibility = .visible // always visible
-//            self.addSubview(scale)
-//        } else {
-//            // Fallback on earlier versions
-//        }
-        
+
     }
     
     
     // Public Hide function
     public func hide() {
         self.hidePopUp()
-        self.removeFromSuperview()
-        self.backGroundView?.removeFromSuperview()
     }
     
     private func setUpBackgroundView() {
@@ -250,6 +240,13 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     private func hidePopUp() {
         
         if !isPopupShowing {return}
+        
+        for ob in self.subviews {
+            ob.removeFromSuperview()
+        }
+        
+        self.removeFromSuperview()
+        self.backGroundView?.removeFromSuperview()
         
         UIView.animate(withDuration: 0.5, animations: {
             self.frame.origin.y += self.height + 25.0

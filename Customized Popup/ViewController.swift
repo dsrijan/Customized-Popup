@@ -29,13 +29,21 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
         pv.hide()
     }
     
+    @IBAction func alertWithImage(_ sender: UIButton) {
+        pv.delegate = self
+        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey Check this is awesome na ????", showCancelButton: true)
+    }
+    @IBAction func simpleAlert(_ sender: UIButton) {
+        pv.delegate = self
+        pv.simpleAlert(title: "Hello Alert", message: "Alert and say is this a problem or not :D :D", showCancelButton: false)
+    }
     func customizedOkButtonTapped(obj: UIButton) {
         print("ok button called hello")
     }
     
     @IBAction func tapButton(_ sender: Any) {
         pv.delegate = self
-        pv.alertWithMapView()
+        pv.alertWithMapView(latitude: -27.084, longitude: 18.212)
 //        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
     }
     override func didReceiveMemoryWarning() {
