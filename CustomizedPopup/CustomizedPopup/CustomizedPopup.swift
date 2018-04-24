@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import MapKit
+import CoreLocation
 
 public enum CustomizedPopupPostion {
     case bottom
@@ -17,12 +19,14 @@ public protocol CustomizedPopupDelegate {
     func customizedOkButtonTapped(obj: UIButton)
 }
 
-public class CustomizedPopup: UIView {
+public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     
     var topView: UIView?
    
     // Corner Radius Of View
-    public var cornerRadius : CGFloat = 0.0
+    public var cornerRadius : CGFloat = 10.0
+    
+    var locationManager = CLLocationManager()
     
     private var backGroundView : UIView?
     
@@ -32,7 +36,7 @@ public class CustomizedPopup: UIView {
     public var delegate : CustomizedPopupDelegate?
   
     // Height Of Customized Popup
-    public var height : CGFloat = 200.0
+    public var height : CGFloat = 180.0
     
     private var originY : CGFloat!
     
@@ -56,6 +60,8 @@ public class CustomizedPopup: UIView {
     
     private var alertImage: UIImage?
     
+    private var mapView: MKMapView?
+    
     // Public Show function
     public func simpleAlert(title:String, message:String, showCancelButton: Bool) {
         
@@ -68,6 +74,8 @@ public class CustomizedPopup: UIView {
         self.topView = rootView
         self.setUpBackgroundView()
         self.setUpFrame()
+        self.setUpSimpleAlert()
+        self.showPopUp()
     }
     
     // Public Show function
@@ -83,6 +91,55 @@ public class CustomizedPopup: UIView {
         self.topView = rootView
         self.setUpBackgroundView()
         self.setUpFrame()
+        self.setUpAlertWithImage()
+        self.showPopUp()
+    }
+    
+    public func alertWithMapView() {
+        guard let rootView = UIApplication.shared.keyWindow else {
+            return
+        }
+        self.topView = rootView
+        self.setUpBackgroundView()
+        setUpMapViewFrame()
+        setUpMapView()
+        self.showPopUp()
+    }
+    
+    private func setUpMapViewFrame() {
+        self.originY = (self.topView?.frame.height)!
+        self.frame = (self.topView?.frame)!
+        self.frame.size.height = self.height
+        self.backgroundColor = self.backGroundColor
+        self.layer.cornerRadius = cornerRadius
+        self.topView?.addSubview(self)
+    }
+    
+    private func setUpMapView() {
+        print(self.frame.width)
+        mapView = MKMapView(frame: (self.frame))
+        
+        let latDelta:Double = 0.5
+        let lngDelta:Double = 0.5
+        
+        let latitude:Double = 37.57554038
+        let longitude:Double = -122.40068475
+        
+        let locationcoordinates = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        let zoomSpan = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: lngDelta)
+        let region = MKCoordinateRegion(center: locationcoordinates, span: zoomSpan)
+        self.mapView!.setRegion(region, animated: true)
+        
+        self.addSubview(mapView!)
+        
+//        if #available(iOS 11.0, *) {
+//            let scale = MKScaleView(mapView: mapView)
+//            scale.scaleVisibility = .visible // always visible
+//            self.addSubview(scale)
+//        } else {
+//            // Fallback on earlier versions
+//        }
+        
     }
     
     
@@ -167,16 +224,11 @@ public class CustomizedPopup: UIView {
     }
     
     private func setUpFrame() {
-        
-        
         self.originY = (self.topView?.frame.height)!
-        
         self.frame = CGRect(x: 0, y: (self.originY), width: (self.topView?.frame.width)!, height: height)
         self.backgroundColor = self.backGroundColor
         self.layer.cornerRadius = cornerRadius
         self.topView?.addSubview(self)
-        setUpAlertWithImage()
-        showPopUp()
     }
     
     private func showPopUp() {
@@ -184,7 +236,7 @@ public class CustomizedPopup: UIView {
         isPopupShowing = true
         self.isHidden = false
         self.frame.origin.y = self.originY
-        UIView.animate(withDuration: 1, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             self.frame.origin.y -= self.height
             self.backGroundView?.alpha = 0.6
             self.backGroundView?.isHidden = false
@@ -199,8 +251,8 @@ public class CustomizedPopup: UIView {
         
         if !isPopupShowing {return}
         
-        UIView.animate(withDuration: 1, animations: {
-            self.frame.origin.y += self.height
+        UIView.animate(withDuration: 0.5, animations: {
+            self.frame.origin.y += self.height + 25.0
             self.backGroundView?.alpha = 0.2
         }) { (status) in
             self.isHidden = true

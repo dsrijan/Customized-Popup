@@ -16,6 +16,8 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.view.backgroundColor = UIColor.groupTableViewBackground
+        
         let rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.rightButton))
         self.navigationItem.rightBarButtonItem = rightBarButton
         
@@ -32,14 +34,9 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
     }
     
     @IBAction func tapButton(_ sender: Any) {
-        
-        pv.cornerRadius = 10.0
-        pv.height =  180.0
         pv.delegate = self
-//        pv.simpleAlert(title: "", message: "Do you like our product.", showCancelButton: false)
-        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
-    
-        
+        pv.alertWithMapView()
+//        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
