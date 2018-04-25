@@ -43,7 +43,7 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
     
     @IBAction func tapButton(_ sender: Any) {
         pv.delegate = self
-        pv.alertWithMapView(latitude: -27.084, longitude: 18.212)
+        pv.alertWithMapView(latitude: 37.57554038, longitude: -122.40068475)
 //        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
     }
     override func didReceiveMemoryWarning() {

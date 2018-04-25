@@ -15,8 +15,9 @@ public enum CustomizedPopupPostion {
     case center
 }
 
+@objc
 public protocol CustomizedPopupDelegate {
-    func customizedOkButtonTapped(obj: UIButton)
+   @objc optional func customizedOkButtonTapped(obj: UIButton)
 }
 
 public class CustomizedPopup: UIView, CLLocationManagerDelegate {
@@ -117,10 +118,12 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     
     private func setUpMapView(lat: Double, long: Double) {
         print(self.frame.width)
-        mapView = MKMapView(frame: (self.frame))
+        mapView = MKMapView(frame:self.frame)
+        mapView?.isScrollEnabled = false
+        mapView?.layer.cornerRadius = self.cornerRadius
         
-        let latDelta:Double = 0.5
-        let lngDelta:Double = 0.5
+        let latDelta:Double = 0.05
+        let lngDelta:Double = 0.05
         
         let latitude:Double = lat //37.57554038
         let longitude:Double = long //-122.40068475
@@ -131,7 +134,38 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
         self.mapView!.setRegion(region, animated: true)
         
         self.addSubview(mapView!)
+        
+        let scrollHandlingBar = UIView(frame: CGRect(x: (self.frame.width / 2) - 70.0, y: 0 , width: 140.0, height: 5.0))
+        scrollHandlingBar.backgroundColor = UIColor.lightGray
+        scrollHandlingBar.layer.borderWidth = 1.0
+        scrollHandlingBar.layer.borderColor = UIColor.lightGray.cgColor
+        scrollHandlingBar.layer.shadowColor = UIColor.lightGray.cgColor
+        scrollHandlingBar.layer.shadowRadius = 5.0
+        scrollHandlingBar.isUserInteractionEnabled = true
+        mapView?.addSubview(scrollHandlingBar)
+        
+        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleView))
+        mapView?.isUserInteractionEnabled = true
+        mapView?.addGestureRecognizer(panGesture)
+       
+    }
+    
+    @objc
+    private func handleView(gesture: UIPanGestureRecognizer) {
+        print("srijan")
+        
+        
+        
+        let translation = gesture.translation(in: self.topView)
+        
+      
+        
+        // note: 'view' is optional and need to be unwrapped
+        gesture.view!.center = CGPoint(x: gesture.view!.center.x + translation.x, y: gesture.view!.center.y + translation.y)
+        gesture.view?.frame.size.height = self.height - (gesture.view?.frame.origin.y)!
+        gesture.setTranslation(CGPoint.zero, in: self.topView)
 
+        
     }
     
     
@@ -162,6 +196,8 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     }
     
     private func setUpSimpleAlert() {
+     
+        
         let title = UILabel(frame: CGRect(x: 10, y: 10, width: self.frame.width - 10, height: 20))
         title.text = self.title
         title.textAlignment = .center
@@ -203,7 +239,7 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     
     @objc private func okButtonTapped(sender: UIButton){
         if self.delegate != nil {
-            self.delegate?.customizedOkButtonTapped(obj: sender)
+            self.delegate?.customizedOkButtonTapped!(obj: sender)
         }
         self.hidePopUp()
     }
@@ -240,14 +276,7 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     private func hidePopUp() {
         
         if !isPopupShowing {return}
-        
-        for ob in self.subviews {
-            ob.removeFromSuperview()
-        }
-        
-        self.removeFromSuperview()
-        self.backGroundView?.removeFromSuperview()
-        
+      
         UIView.animate(withDuration: 0.5, animations: {
             self.frame.origin.y += self.height + 25.0
             self.backGroundView?.alpha = 0.2
@@ -255,6 +284,11 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
             self.isHidden = true
             self.isPopupShowing = false
             self.backGroundView?.isHidden = true
+            for ob in self.subviews {
+                ob.removeFromSuperview()
+            }
+            self.removeFromSuperview()
+            self.backGroundView?.removeFromSuperview()
         }
     }
     
