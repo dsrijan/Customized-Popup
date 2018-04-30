@@ -57,6 +57,24 @@ func customizedOkButtonTapped(obj: UIButton) {
 
 ```
 
+## Customizations
+
+
+```
+        alertController.delegate = self
+        alertController.height = 200.0
+        alertController.alertTextColor = UIColor.darkGray
+        alertController.cancelButtonBackGroundColor = UIColor.red
+        alertController.cancelButtonTextColor = UIColor.white
+        alertController.cornerRadius = 20.0
+        alertController.okButtonTextColor = UIColor.white
+        alertController.backGroundColor = UIColor.lightGray
+        alertController.okButtonBackGroundColor = UIColor.darkGray
+        alertController.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey Check this is awesome na ???? Something looks too cool bro. Ohh this is popup", showCancelButton: true)
+
+```
+
+A wide range of customization which makes your app look and feel awesome according to your requirements.
 
 ## Author
 
