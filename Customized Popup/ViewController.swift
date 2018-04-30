@@ -11,7 +11,7 @@ import CustomizedPopup
 
 class ViewController: UIViewController, CustomizedPopupDelegate {
     
-    let pv = CustomizedPopup()
+    let alertController = CustomizedPopup()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,25 +26,25 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
 
     @objc
     private func rightButton() {
-        pv.hide()
+        alertController.hide()
     }
     
     @IBAction func alertWithImage(_ sender: UIButton) {
-        pv.delegate = self
-        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey Check this is awesome na ????", showCancelButton: true)
+        alertController.delegate = self
+        alertController.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey Check this is awesome na ????", showCancelButton: true)
     }
     @IBAction func simpleAlert(_ sender: UIButton) {
-        pv.delegate = self
-        pv.simpleAlert(title: "Hello Alert", message: "Alert and say is this a problem or not :D :D", showCancelButton: false)
+        alertController.delegate = self
+        alertController.simpleAlert(title: "Hello Alert", message: "Alert and say is this a problem or not :D :D", showCancelButton: false)
     }
     func customizedOkButtonTapped(obj: UIButton) {
         print("ok button called hello")
     }
     
     @IBAction func tapButton(_ sender: Any) {
-        pv.delegate = self
-        pv.alertWithMapView(latitude: 37.57554038, longitude: -122.40068475)
-//        pv.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
+        alertController.delegate = self
+        alertController.alertWithMapView(latitude: 37.57554038, longitude: -122.40068475)
+//        alertController.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey I just came across this stuff.. Wanna check this ?????", showCancelButton: true)
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
