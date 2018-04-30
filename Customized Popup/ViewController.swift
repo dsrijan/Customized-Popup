@@ -31,7 +31,15 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
     
     @IBAction func alertWithImage(_ sender: UIButton) {
         alertController.delegate = self
-        alertController.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey Check this is awesome na ????", showCancelButton: true)
+        alertController.height = 200.0
+        alertController.alertTextColor = UIColor.darkGray
+        alertController.cancelButtonBackGroundColor = UIColor.red
+        alertController.cancelButtonTextColor = UIColor.white
+        alertController.cornerRadius = 20.0
+        alertController.okButtonTextColor = UIColor.white
+        alertController.backGroundColor = UIColor.lightGray
+        alertController.okButtonBackGroundColor = UIColor.darkGray
+        alertController.alertWithImage(image: #imageLiteral(resourceName: "default"), message: "Hey Check this is awesome na ???? Something looks too cool bro. Ohh this is popup", showCancelButton: true)
     }
     @IBAction func simpleAlert(_ sender: UIButton) {
         alertController.delegate = self

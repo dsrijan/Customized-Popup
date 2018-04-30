@@ -247,8 +247,8 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     }
     
     private func setUpFrame() {
-        self.originY = (self.topView?.frame.height)!
-        self.frame = CGRect(x: 0, y: (self.originY), width: (self.topView?.frame.width)!, height: height)
+        self.originY = (self.topView?.frame.height)! - 10.0
+        self.frame = CGRect(x: 10, y: (self.originY), width: (self.topView?.frame.width)! - 20, height: height)
         self.backgroundColor = self.backGroundColor
         self.layer.cornerRadius = cornerRadius
         self.topView?.addSubview(self)
