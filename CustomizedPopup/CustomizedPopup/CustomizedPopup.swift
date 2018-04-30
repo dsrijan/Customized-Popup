@@ -117,7 +117,8 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     }
     
     private func setUpMapView(lat: Double, long: Double) {
-        print(self.frame.width)
+       
+        self.backgroundColor = UIColor.clear
         mapView = MKMapView(frame:self.frame)
         mapView?.isScrollEnabled = false
         mapView?.layer.cornerRadius = self.cornerRadius
@@ -144,28 +145,25 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
         scrollHandlingBar.isUserInteractionEnabled = true
         mapView?.addSubview(scrollHandlingBar)
         
-        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleView))
-        mapView?.isUserInteractionEnabled = true
-        mapView?.addGestureRecognizer(panGesture)
+//        let panGesture = UIPanGestureRecognizer(target: self, action: #selector(self.handleView))
+//        mapView?.isUserInteractionEnabled = true
+//        mapView?.addGestureRecognizer(panGesture)
        
     }
     
     @objc
     private func handleView(gesture: UIPanGestureRecognizer) {
-        print("srijan")
-        
-        
-        
+      
+        let senderView = gesture.view!
         let translation = gesture.translation(in: self.topView)
         
-      
-        
-        // note: 'view' is optional and need to be unwrapped
-        gesture.view!.center = CGPoint(x: gesture.view!.center.x + translation.x, y: gesture.view!.center.y + translation.y)
-        gesture.view?.frame.size.height = self.height - (gesture.view?.frame.origin.y)!
-        gesture.setTranslation(CGPoint.zero, in: self.topView)
-
-        
+        switch  gesture.state {
+        case .began, .changed, .ended:
+            senderView.center.y = translation.y
+            senderView.frame.size.height = self.height - (gesture.view?.frame.origin.y)!
+        default:
+            print("end")
+        }
     }
     
     
@@ -196,7 +194,6 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     }
     
     private func setUpSimpleAlert() {
-     
         
         let title = UILabel(frame: CGRect(x: 10, y: 10, width: self.frame.width - 10, height: 20))
         title.text = self.title
@@ -276,9 +273,8 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     private func hidePopUp() {
         
         if !isPopupShowing {return}
-      
         UIView.animate(withDuration: 0.5, animations: {
-            self.frame.origin.y += self.height + 25.0
+            self.frame.origin.y = (self.topView?.frame.size.height)!
             self.backGroundView?.alpha = 0.2
         }) { (status) in
             self.isHidden = true
@@ -289,7 +285,7 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
             }
             self.removeFromSuperview()
             self.backGroundView?.removeFromSuperview()
-        }
+          }
     }
     
     /*
@@ -301,5 +297,7 @@ public class CustomizedPopup: UIView, CLLocationManagerDelegate {
     */
 
 }
+
+
 
 
