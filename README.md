@@ -3,7 +3,7 @@ Customized popup : One of the most customized popup with custom view inside the 
 Easy to maintain :P
 
 <p align="center">
-  <img src="https://github.com/dsrijan/Customized-Popoup/blob/master/customizedPopupGIF.gif"/>
+  <img src="https://github.com/dsrijan/Customized-Popoup/blob/master/customizePopUpGIF.gif.gif"/>
 </p>
 
 ## Prerequisites
