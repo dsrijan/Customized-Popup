@@ -76,6 +76,10 @@ func customizedOkButtonTapped(obj: UIButton) {
 
 A wide range of customization which makes your app look and feel awesome according to your requirements.
 
+<p align="center">
+  <img src="https://github.com/dsrijan/Customized-Popoup/blob/master/customizedAlert.jpeg"/>
+</p>
+
 ## Author
 
 Any suggestion and feedback invited:
