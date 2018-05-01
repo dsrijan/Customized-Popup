@@ -1,4 +1,4 @@
-# Customized-Popoup
+# Customized-Popup
 Customized popup : One of the most customized popup with custom view inside the popup. You can show map, image and texts inside your popup.
 Easy to maintain :P
 
