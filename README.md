@@ -8,12 +8,19 @@ Easy to maintain :P
 
 ## Installation
 
-You want to add pod 'Customized-Popup', '~> 0.1' similar to the following to your Podfile:
+You want to add pod 
 
-target 'MyApp' do
-  pod 'Customized-Popup', '~> 0.1'
-end
-Then run a pod install inside your terminal, or from CocoaPods.app.
+```
+pod 'Customized-Popup', '~> 0.1'
+
+ ```
+in your podfile
+
+```
+pod install
+
+ ```
+inside your terminal, or from CocoaPods.app.
 
 ## Prerequisites
 
