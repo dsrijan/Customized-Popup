@@ -6,6 +6,15 @@ Easy to maintain :P
   <img src="https://github.com/dsrijan/Customized-Popoup/blob/master/customizePopUpGIF.gif"/>
 </p>
 
+## Installation
+
+You want to add pod 'Customized-Popup', '~> 0.1' similar to the following to your Podfile:
+
+target 'MyApp' do
+  pod 'Customized-Popup', '~> 0.1'
+end
+Then run a pod install inside your terminal, or from CocoaPods.app.
+
 ## Prerequisites
 
 Xcode 9 and Swift 4
