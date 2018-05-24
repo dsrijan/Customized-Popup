@@ -31,6 +31,7 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
     
     @IBAction func alertWithImage(_ sender: UIButton) {
         alertController.delegate = self
+        
         alertController.height = 200.0
         alertController.alertTextColor = UIColor.darkGray
         alertController.cancelButtonBackGroundColor = UIColor.red
