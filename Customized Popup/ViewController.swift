@@ -21,6 +21,7 @@ class ViewController: UIViewController, CustomizedPopupDelegate {
         let rightBarButton = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(self.rightButton))
         self.navigationItem.rightBarButtonItem = rightBarButton
         
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
