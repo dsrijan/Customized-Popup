@@ -5,9 +5,6 @@
 [![License](https://img.shields.io/cocoapods/l/Customized-Popup.svg?style=flat)](https://cocoapods.org/pods/Customized-Popup)
 [![Platform](https://img.shields.io/cocoapods/p/Customized-Popup.svg?style=flat)](https://cocoapods.org/pods/Customized-Popup)
 
-<<<<<<< HEAD
-## Example
-=======
 ## Installation
 
 You want to add pod 
@@ -25,7 +22,6 @@ pod install
 inside your terminal, or from CocoaPods.app.
 
 ## Prerequisites
->>>>>>> 416e965ebf068329764ea1f3297bd2574fa305d1
 
 To run the example project, clone the repo, and run `pod install` from the Example directory first.
 
