@@ -12,6 +12,7 @@ import CustomizedPopup
 class ViewController: UIViewController, CustomizedPopupDelegate {
     
     let alertController = CustomizedPopup()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
